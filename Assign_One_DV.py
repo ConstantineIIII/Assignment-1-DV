@@ -1,14 +1,5 @@
 import matplotlib.pyplot as plt
 
-# Questions:
-# Which games sold the most units?
-# Which genre earned the most revenue?
-# Which platform performed the best worldwide?
-# Which region generated the most revenue?
-# Does higher marketing spend seem connected to higher revenue?
-# Which games had high ratings but low sales?
-# Which games had strong sales despite lower ratings?
-
 sales_data = [
     ["2023-01-30", "Game A", "PC", "North America", "Action", 1000, 50000],
     ["2023-01-30", "Game B", "PS4", "Europe", "Adventure", 1600, 77000],
@@ -112,17 +103,23 @@ sales_data = [
     ["2023-12-03", "Game CV", "Switch", "Europe", "RPG", 1900, 95800],
 ]
 
-genre_totals = {}
+
+# Which games sold the most units?
+game_sales = {}
 
 for each_game in sales_data:
-    genre = each_game[4]
+    game_name = each_game[1]
     units = each_game[5]
-    genre_totals[genre] = genre_totals.get(genre, 0) + units
-plt.pie(genre_totals.values(), labels=genre_totals.keys(), autopct="%1.1f%%")
-plt.title("Share of Units Sold by Genre")
-plt.show()
+
+    game_sales[game_name] = units
+
+top_game = max(game_sales, key=game_sales.get)
+
+print("\nGame with most units sold:")
+print(top_game, "-", game_sales[top_game], "units")
 
 
+# Which genre earned the most revenue?
 genre_revenue = {}
 
 for each_game in sales_data:
@@ -131,7 +128,7 @@ for each_game in sales_data:
 
     genre_revenue[genre] = genre_revenue.get(genre, 0) + revenue
 
-# Find highest earning genre
+
 top_genre = max(genre_revenue, key=genre_revenue.get)
 
 print("Revenue by genre:")
@@ -141,9 +138,58 @@ print("\nGenre with the highest revenue:")
 print(top_genre, "-", "$" + str(genre_revenue[top_genre]))
 
 # Optional graph
-plt.figure()
+plt.figure(figsize=(10,6))   # Makes the graph wider
+
 plt.bar(genre_revenue.keys(), genre_revenue.values())
-plt.xticks(rotation=45)
+
+plt.xticks(rotation=45, ha='right')   # Rotate labels and align them
 plt.title("Revenue by Genre")
 plt.ylabel("Revenue ($)")
+plt.xlabel("Genre")
+
+plt.tight_layout()   # Automatically adjusts spacing
+plt.show()
+
+
+# Which platform performed the best worldwide?
+platform_totals = {}
+
+for each_game in sales_data:
+    platform = each_game[2]
+    revenue = each_game[6]
+
+    platform_totals[platform] = platform_totals.get(platform, 0) + revenue
+
+top_platform = max(platform_totals, key=platform_totals.get)
+
+print("\nBest performing platform:")
+print(top_platform, "-", "$" + str(platform_totals[top_platform]))
+
+plt.figure(figsize=(8,5))
+plt.bar(platform_totals.keys(), platform_totals.values())
+plt.title("Revenue by Platform")
+plt.ylabel("Revenue ($)")
+plt.tight_layout()
+plt.show()
+
+# Which region generated the most revenue?
+region_totals = {}
+
+for each_game in sales_data:
+    region = each_game[3]
+    revenue = each_game[6]
+
+    region_totals[region] = region_totals.get(region, 0) + revenue
+
+top_region = max(region_totals, key=region_totals.get)
+
+print("\nRegion with highest revenue:")
+print(top_region, "-", "$" + str(region_totals[top_region]))
+
+plt.figure(figsize=(8,5))
+plt.bar(region_totals.keys(), region_totals.values())
+plt.title("Revenue by Region")
+plt.ylabel("Revenue ($)")
+plt.xticks(rotation=20)
+plt.tight_layout()
 plt.show()
