@@ -102,13 +102,13 @@ sales_data = [
     ["2023-11-11", "Game CU", "Switch", "North America", "Puzzle", 1200, 64900],
     ["2023-12-03", "Game CV", "Switch", "Europe", "RPG", 1900, 95800],
 ]
-game_names=[]
-units_sold=[]
-genreTotals={}
-for eachGame in sales_data:
-    genre=eachGame[4]
-    units=eachGame[5]
-    genreTotals[genre]=genreTotals.get(genre, 0)+units
-plt.pie(genreTotals, labels=genreTotals.keys(), autopct="%1.1f%%")
-plt.title("Share of units sold by genre")
+
+genre_totals = {}
+
+for each_game in sales_data:
+    genre = each_game[4]
+    units = each_game[5]
+    genre_totals[genre] = genre_totals.get(genre, 0) + units
+plt.pie(genre_totals.values(), labels=genre_totals.keys(), autopct="%1.1f%%")
+plt.title("Share of Units Sold by Genre")
 plt.show()
