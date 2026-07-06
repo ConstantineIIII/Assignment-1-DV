@@ -1,5 +1,14 @@
 import matplotlib.pyplot as plt
 
+# Questions:
+# Which games sold the most units?
+# Which genre earned the most revenue?
+# Which platform performed the best worldwide?
+# Which region generated the most revenue?
+# Does higher marketing spend seem connected to higher revenue?
+# Which games had high ratings but low sales?
+# Which games had strong sales despite lower ratings?
+
 sales_data = [
     ["2023-01-30", "Game A", "PC", "North America", "Action", 1000, 50000],
     ["2023-01-30", "Game B", "PS4", "Europe", "Adventure", 1600, 77000],
@@ -111,4 +120,30 @@ for each_game in sales_data:
     genre_totals[genre] = genre_totals.get(genre, 0) + units
 plt.pie(genre_totals.values(), labels=genre_totals.keys(), autopct="%1.1f%%")
 plt.title("Share of Units Sold by Genre")
+plt.show()
+
+
+genre_revenue = {}
+
+for each_game in sales_data:
+    genre = each_game[4]  # Genre column
+    revenue = each_game[6]  # Revenue column
+
+    genre_revenue[genre] = genre_revenue.get(genre, 0) + revenue
+
+# Find highest earning genre
+top_genre = max(genre_revenue, key=genre_revenue.get)
+
+print("Revenue by genre:")
+print(genre_revenue)
+
+print("\nGenre with the highest revenue:")
+print(top_genre, "-", "$" + str(genre_revenue[top_genre]))
+
+# Optional graph
+plt.figure()
+plt.bar(genre_revenue.keys(), genre_revenue.values())
+plt.xticks(rotation=45)
+plt.title("Revenue by Genre")
+plt.ylabel("Revenue ($)")
 plt.show()
